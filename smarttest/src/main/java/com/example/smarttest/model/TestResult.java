@@ -6,19 +6,36 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 @Document(collection = "test_results")
+@Schema(description = "Represents a result from an automated test execution")
 public class TestResult {
 
     @Id
+    @Schema(description = "Unique database ID", example = "64b8c9016d5e3c0021aabcde", accessMode = Schema.AccessMode.READ_ONLY)
     private String id;
 
+    @Schema(description = "Unique ID for the test execution", example = "TST-20250721-001")
     private String testId;
+
+    @Schema(description = "Descriptive name of the test case", example = "LoginFunctionalityTest")
     private String testName;
-    private String status; // PASS or FAIL
-    private double duration; // in seconds
+
+    @Schema(description = "Execution result of the test case", example = "PASS")
+    private String status;
+
+    @Schema(description = "Duration in seconds", example = "3.24")
+    private double duration;
+
+    @Schema(description = "Date and time when the test was run", example = "2025-07-21T15:30:00")
     private LocalDateTime timestamp;
+
+    @Schema(description = "Tags assigned to the test (e.g., functional, smoke)", example = "[\"smoke\", \"login\"]")
     private List<String> tags;
-    private String environment; // staging, production, etc.
+
+    @Schema(description = "Test environment", example = "staging")
+    private String environment;
 
     // Constructors
     public TestResult() {
@@ -36,7 +53,6 @@ public class TestResult {
     }
 
     // Getters and Setters
-
     public String getId() {
         return id;
     }
